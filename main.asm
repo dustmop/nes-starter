@@ -82,7 +82,7 @@ NMI:
   mov main_yield, #$ff
   ; DMA sprites.
   mov OAM_ADDR, #$00
-  mov OAM_DATA, #$02
+  mov OAM_DMA, #$02
   ; Reset ppu pointer.
   lda #0
   sta PPU_ADDR
