@@ -23,10 +23,10 @@ MAPPER_NUMBER = 0
 .export palette, graphics
 
 palette:
-.incbin ".b/image.palette.dat"
+.incbin "build/image.palette.dat"
 
 graphics:
-.incbin ".b/image.graphics.dat"
+.incbin "build/image.graphics.dat"
 
 
 .segment "VECTORS"
@@ -40,4 +40,4 @@ graphics:
 
 .segment "CHRROM"
 
-.incbin ".b/image.chr.dat"
+.incbin "build/image.chr.dat"
