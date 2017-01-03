@@ -20,13 +20,16 @@ MAPPER_NUMBER = 0
 
 .segment "CODE"
 
-.export palette, graphics
+.export palette, graphics, spritelist
 
 palette:
 .incbin "build/image.palette.dat"
 
 graphics:
 .incbin "build/image.graphics.dat"
+
+spritelist:
+.byte $ff
 
 
 .segment "VECTORS"

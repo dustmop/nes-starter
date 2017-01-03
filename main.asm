@@ -4,7 +4,7 @@
 .include "read_controller.h.asm"
 
 .importzp bg_x_scroll, bg_y_scroll, main_yield, ppu_ctrl_current
-.import palette, graphics
+.import palette, graphics, spritelist
 
 .export RESET, NMI
 
@@ -56,6 +56,11 @@ Wait1:
   ldx #<graphics
   ldy #>graphics
   jsr LoadGraphics
+
+  ; Load spritelist, which is defined in the prologue.
+  ldx #<spritelist
+  ldy #>spritelist
+  jsr LoadSpritelist
 
   ; Turn on the nmi, then wait for the next frame before enabling the display.
   ; This prevents a partially rendered frame from appearing at start-up.
