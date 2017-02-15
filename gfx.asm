@@ -45,6 +45,9 @@ Loop:
   iny
   cpy #$20
   bne Loop
+  ldy #0
+  lda (pointer),y
+  sta PPU_DATA
   rts
 .endproc
 
