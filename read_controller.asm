@@ -7,6 +7,9 @@
 .segment "CODE"
 
 
+;ReadInputPort1
+; Read the state of the input port #0.
+; @out buttons: State of each button.
 .proc ReadInputPort0
   ldy #1
   sty INPUT_PORT_0
@@ -26,6 +29,9 @@ Done:
 .endproc
 
 
+;ReadInputPort1
+; Read the state of the input port #1.
+; @out buttons: State of each button.
 .proc ReadInputPort1
   ldy #1
   sty INPUT_PORT_0

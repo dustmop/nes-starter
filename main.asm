@@ -11,24 +11,31 @@
 .segment "CODE"
 
 RESET:
+  ; Stop interrupts from happening during initialization.
   sei
+  ; Disable decimal mode.
   cld
+  ; Disable IRQs from the APU.
   ldy #$40
   sty $4017
-  dey
 StackAndGraphics:
+  ; Assign the stack to be empty.
   ldx #$ff
   txs
+  ; Clear PPU registers.
   inx
   stx PPU_CTRL
   stx PPU_MASK
+  ; Turn off audio.
   stx $4010
   stx $4015
 
+  ; Wait for next frame.
 Wait0:
   bit PPU_STATUS
   bpl Wait0
 
+  ; Clear all RAM by assigning 0, except the shadow OAM, which is assigned $ff.
 ClearMemory:
   ldx #0
 :
@@ -43,6 +50,7 @@ ClearMemory:
   inx
   bne :-
 
+  ; Wait for next frame. PPU needs 2 frames of time to startup.
 Wait1:
   bit PPU_STATUS
   bpl Wait1
@@ -78,6 +86,7 @@ ForeverLoop:
 
 
 NMI:
+  ; Preserve registers.
   pha
   txa
   pha
@@ -100,6 +109,7 @@ NMI:
   ; Assign ppu control.
   lda ppu_ctrl_current
   sta PPU_CTRL
+  ; Restore registers.
   pla
   tay
   pla

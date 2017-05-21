@@ -1,5 +1,8 @@
 default: starter.nes
 
+clean:
+	rm -rf build/
+
 SRC = main.asm \
       gfx.asm \
       read_controller.asm \

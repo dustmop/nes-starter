@@ -11,6 +11,12 @@
 
 .importzp pointer
 
+
+;LoadGraphics
+; Takes a pointer to nametable and attributes, of size $400, and loads it into
+; PPU memory.
+; @in x: Low byte of the pointer.
+; @in y: Low byte of the pointer.
 .proc LoadGraphics
   bit PPU_STATUS
   stx pointer+0
@@ -30,6 +36,11 @@ Loop:
   rts
 .endproc
 
+
+;LoadPalette
+; Takes a pointer to a palette, of size $20, and loads it into PPU memory.
+; @in x: Low byte of the pointer.
+; @in y: Low byte of the pointer.
 .proc LoadPalette
   bit PPU_STATUS
   stx pointer+0
@@ -51,6 +62,12 @@ Loop:
   rts
 .endproc
 
+
+;LoadSpritelist
+; Takes a pointer to a list of sprites, terminated by $ff, and loads it into
+; the shadow OAM.
+; @in x: Low byte of the pointer.
+; @in y: Low byte of the pointer.
 .proc LoadSpritelist
   stx pointer+0
   sty pointer+1
@@ -66,6 +83,9 @@ Done:
   rts
 .endproc
 
+
+;EnableDisplayAndNmi
+; Enable PPU rendering and enable the NMI.
 .proc EnableDisplayAndNmi
   lda #(PPU_CTRL_NMI_ENABLE | PPU_CTRL_SPRITE_1000)
   sta PPU_CTRL
@@ -77,6 +97,9 @@ Done:
   rts
 .endproc
 
+
+;EnableNmi
+; Enable the NMI, and disable everything else.
 .proc EnableNmi
   lda #(PPU_CTRL_NMI_ENABLE | PPU_CTRL_SPRITE_1000)
   sta PPU_CTRL
@@ -85,6 +108,9 @@ Done:
   rts
 .endproc
 
+
+;WaitNewFrame
+; Wait until the next NMI happens and is finished.
 .proc WaitNewFrame
   mov main_yield, #0
 WaitLoop:
@@ -94,6 +120,9 @@ WaitLoop:
   rts
 .endproc
 
+
+;EnableDisplay
+; Enable PPU rendering, keeping other PPU settings the same.
 .proc EnableDisplay
   lda ppu_mask_current
   ora #(PPU_MASK_SHOW_SPRITES | PPU_MASK_SHOW_BG)
@@ -102,6 +131,9 @@ WaitLoop:
   rts
 .endproc
 
+
+;DisableDisplay
+; Disable PPU rendering.
 .proc DisableDisplay
   lda ppu_mask_current
   and #($ff & ~PPU_MASK_SHOW_SPRITES & ~PPU_MASK_SHOW_BG)
